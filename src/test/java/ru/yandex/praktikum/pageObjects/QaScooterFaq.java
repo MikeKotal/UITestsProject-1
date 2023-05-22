@@ -7,7 +7,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class QaScooterFaq {
 
@@ -52,6 +54,30 @@ public class QaScooterFaq {
             }
         } else {
             Assert.fail("На страние не хватает раздела FAQ");
+        }
+    }
+
+    public void checkQuestionAndAnswerTexts(String[] question, String[] answer) {
+        List<WebElement> questions = driver.findElements(questionButtonsList);
+        List<WebElement> answers = driver.findElements(answerTexts);
+
+        List<String> perfectQuestions = Arrays.asList(question);
+        List<String> perfectAnswers = Arrays.asList(answer);
+
+        for (int i = 0; i < questions.size(); i++) {
+            ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();",
+                    questions.get(i));
+            questions.get(i).click();
+            int count = i;
+            new WebDriverWait(driver, 3)
+                    .until(driver -> (!questions.get(count).getText().isEmpty()
+                            && !answers.get(count).getText().isEmpty()
+                    ));
+
+            Assert.assertEquals("Текст вопроса должен иметь ввид: " + perfectQuestions.get(i) + " .",
+                    perfectQuestions.get(i), questions.get(i).getText());
+            Assert.assertEquals("Текст ответа должен иметь ввид: " + perfectAnswers.get(i) + " .",
+                    perfectAnswers.get(i), answers.get(i).getText());
         }
     }
 }
