@@ -1,4 +1,4 @@
-package ru.yandex.praktikum.pageObjects;
+package scooter_ui.page_objects;
 
 import org.junit.Assert;
 import org.openqa.selenium.By;
@@ -9,7 +9,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class QaScooterFaq {
 

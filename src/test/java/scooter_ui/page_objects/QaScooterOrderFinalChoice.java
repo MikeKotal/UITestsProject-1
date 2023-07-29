@@ -1,4 +1,4 @@
-package ru.yandex.praktikum.pageObjects;
+package scooter_ui.page_objects;
 
 import org.junit.Assert;
 import org.openqa.selenium.By;

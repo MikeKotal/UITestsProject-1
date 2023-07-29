@@ -1,6 +1,10 @@
-package ru.yandex.praktikum.helper;
+package scooter_ui.helper;
 
 public interface Constants {
+
+    String SCOOTER_PAGE = "https://qa-scooter.praktikum-services.ru";
+    String CHROME = "Chrome";
+    String FIREFOX = "Firefox";
 
     String[] FAQ_ANSWERS = {"Сутки — 400 рублей. Оплата курьеру — наличными или картой.",
             "Пока что у нас так: один заказ — один самокат. Если хотите покататься с друзьями, можете просто сделать несколько заказов — один за другим.",

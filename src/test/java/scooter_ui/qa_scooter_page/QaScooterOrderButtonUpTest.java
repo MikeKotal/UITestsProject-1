@@ -1,19 +1,18 @@
-package ru.yandex.praktikum.qaScooterPage;
+package scooter_ui.qa_scooter_page;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import ru.yandex.praktikum.pageObjects.*;
+import scooter_ui.helper.Initializer;
+import scooter_ui.page_objects.*;
+
+import static scooter_ui.helper.Constants.SCOOTER_PAGE;
 
 @RunWith(Parameterized.class)
-public class QaScooterOrderTestButtonDown {
+public class QaScooterOrderButtonUpTest extends Initializer {
 
     private final String name;
     private final String lastName;
@@ -28,7 +27,7 @@ public class QaScooterOrderTestButtonDown {
     private final String expectedStatus = "Заказ оформлен";
     private WebDriver driver;
 
-    public QaScooterOrderTestButtonDown(String name, String lastName, String address, String subwayStation, String phoneNumber,
+    public QaScooterOrderButtonUpTest(String name, String lastName, String address, String subwayStation, String phoneNumber,
                                       String date, String durationRent, String colour, String comment, String browser) {
 
         this.name = name;
@@ -46,17 +45,11 @@ public class QaScooterOrderTestButtonDown {
     @Parameterized.Parameters
     public static Object[][] getPersonalInfo() {
         return new Object[][] {
-                {"Джейсон", "Стетхем", "ул. Цитатная", "Молодёжная", "89999999999",
-                        "02.06.2023", "трое суток", "чёрный жемчуг", "Когда меня рожали, тогда я и родился", "Chrome"},
-                {"Клавдия", "Петровна", "ул. Советская, 4", "Автозаводская", "84853333333",
-                        "03.06.2023", "четверо суток", "серая безысходность", "Трехнем стариной", "Firefox"}
+                {"Иван", "Иванов", "ул. Ленина, 1", "Черкизовская", "89801232323",
+                        "31.05.2023", "сутки", "чёрный жемчуг", "Покатаемся", "Chrome"},
+                {"Петр", "Петров", "ул. Сахарова, 5", "Лубянка", "79159334455",
+                        "01.06.2023", "двое суток", "серая безысходность", "Погоняем", "Firefox"}
         };
-    }
-
-    @Before
-    public void startUp() {
-        WebDriverManager.chromedriver().setup();
-        WebDriverManager.firefoxdriver().setup();
     }
 
     @After
@@ -65,14 +58,9 @@ public class QaScooterOrderTestButtonDown {
     }
 
     @Test
-    public void checkSuccessOrderButtonDown() {
-
-        if (browser.equals("Chrome")) {
-            driver = new ChromeDriver();
-        } else if (browser.equals("Firefox")) {
-            driver = new FirefoxDriver();
-        }
-        driver.get("https://qa-scooter.praktikum-services.ru");
+    public void checkSuccessOrderButtonUp() {
+        driver = createDriver(browser);
+        driver.get(SCOOTER_PAGE);
 
         QaScooterGeneralPage generalPage = new QaScooterGeneralPage(driver);
         QaScooterOrder scooterOrder = new QaScooterOrder(driver);
@@ -83,7 +71,7 @@ public class QaScooterOrderTestButtonDown {
         //Нажимаем верхнюю кнопку заказа
         generalPage.waitOrderButton();
         generalPage.clickCookiesButton();
-        generalPage.clickDownOrderButton();
+        generalPage.clickUpOrderButton();
 
         //Вводим тестовые данные в форму первой страницы
         scooterOrder.waitElementFirstOrderPage();
